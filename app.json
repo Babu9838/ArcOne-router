@@ -1,18 +1,10 @@
 {
-  "appName": "ArcOne",
-  "appType": "Web3 Finance Dashboard",
-  "theme": {
-    "mode": "dark",
-    "primaryColor": "#2563EB",
-    "backgroundColor": "#020617",
-    "cardColor": "#0F172A",
-    "textColor": "#FFFFFF",
-    "accentColor": "#22C55E"
-  },
-  "branding": {
-    "logo": "arc-logo.png",
-    "title": "ArcOne",
-    "subtitle": "Unified Stablecoin Finance Hub"
+  "name": "ArcOne",
+  "theme": "dark",
+  "responsive": true,
+  "wallet": {
+    "metamask": true,
+    "rabby": true
   },
   "networks": [
     {
@@ -22,129 +14,37 @@
       "explorer": "https://testnet.arcscan.app"
     },
     {
-      "name": "Sepolia Testnet",
+      "name": "Sepolia",
       "chainId": 11155111
     },
     {
       "name": "Arbitrum Sepolia",
       "chainId": 421614
-    },
-    {
-      "name": "Base Sepolia",
-      "chainId": 84532
     }
   ],
   "tokens": [
     {
       "symbol": "USDC",
-      "address": "0x3600000000000000000000000000000000000000",
-      "decimals": 6
+      "address": "0x3600000000000000000000000000000000000000"
     },
     {
       "symbol": "EURC",
-      "address": "0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
-      "decimals": 6
+      "address": "0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a"
     },
     {
-      "symbol": "cirBTC",
-      "address": "TBD",
-      "decimals": 8
+      "symbol": "cirBTC"
     }
   ],
-  "layout": {
-    "header": true,
-    "sidebar": true,
-    "footer": true
-  },
-  "sidebar": [
-    "Dashboard",
-    "Wallet",
-    "Assets",
-    "Send",
-    "Receive",
-    "Bridge",
-    "Unified Balance",
-    "Analytics",
-    "Transactions",
-    "Networks",
-    "Settings"
-  ],
-  "widgets": [
-    {
-      "name": "Portfolio Value",
-      "enabled": true
-    },
-    {
-      "name": "Wallet Connect",
-      "enabled": true
-    },
-    {
-      "name": "Network Switch",
-      "enabled": true
-    },
-    {
-      "name": "Token Balances",
-      "enabled": true
-    },
-    {
-      "name": "Send Tokens",
-      "enabled": true
-    },
-    {
-      "name": "Receive Tokens",
-      "enabled": true
-    },
-    {
-      "name": "Unified Balance",
-      "enabled": true
-    },
-    {
-      "name": "Bridge",
-      "enabled": true
-    },
-    {
-      "name": "Fee Estimator",
-      "enabled": true
-    },
-    {
-      "name": "Analytics",
-      "enabled": true
-    },
-    {
-      "name": "Recent Transactions",
-      "enabled": true
-    },
-    {
-      "name": "Social Connect",
-      "enabled": true
-    }
-  ],
-  "socialProviders": [
-    "Google",
-    "GitHub",
-    "Discord",
-    "X",
-    "Telegram"
-  ],
-  "integrations": {
-    "ethers": true,
-    "walletConnect": true,
-    "arcAppKit": true,
-    "bridgeKit": true,
-    "unifiedBalanceKit": true
-  },
   "features": {
-    "walletConnect": true,
-    "networkSwitch": true,
+    "portfolioTracker": true,
     "tokenTransfer": true,
-    "crossChainBridge": true,
-    "unifiedBalanceDeposit": true,
-    "unifiedBalanceSpend": true,
-    "feeEstimator": true,
-    "transactionHistory": true,
-    "portfolioTracking": true,
     "analytics": true,
-    "responsiveDesign": true,
-    "darkMode": true
+    "recentTransactions": true,
+    "explorerIntegration": true,
+    "socialConnect": true,
+    "darkMode": true,
+    "mobileResponsive": true,
+    "unifiedBalanceUI": true,
+    "bridgeUI": true
   }
 }
