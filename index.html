@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArcOne Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:linear-gradient(180deg,#020617,#07152f);
+color:white;
+padding:20px;
+}
+
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.logo{
+width:120px;
+margin:auto;
+display:block;
+}
+
+.brand{
+font-size:48px;
+font-weight:700;
+margin-top:10px;
+}
+
+.top-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-bottom:20px;
+}
+
+.card{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+border-radius:20px;
+padding:20px;
+backdrop-filter:blur(10px);
+}
+
+.card h3{
+margin-bottom:15px;
+}
+
+.big{
+font-size:42px;
+font-weight:700;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:20px;
+}
+
+.token{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:10px;
+background:#0f172a;
+border:1px solid #1e293b;
+border-radius:10px;
+color:white;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-weight:600;
+cursor:pointer;
+margin-top:10px;
+}
+
+.green{
+background:#16a34a;
+}
+
+.purple{
+background:#6d28d9;
+}
+
+.orange{
+background:#ea580c;
+}
+
+.yellow{
+background:#ca8a04;
+}
+
+.transactions table{
+width:100%;
+border-collapse:collapse;
+}
+
+.transactions th,
+.transactions td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,.08);
+text-align:left;
+}
+
+.social{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.social button{
+width:auto;
+padding:10px 20px;
+}
+
+.footer{
+margin-top:30px;
+text-align:center;
+color:#94a3b8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<img src="arc-logo.png" class="logo">
+
+<div class="brand">
+ArcOne
+</div>
+
+</div>
+
+<div class="top-grid">
+
+<div class="card">
+<h3>Total Portfolio</h3>
+<div class="big">$0.00</div>
+<p>0.00 USDC</p>
+</div>
+
+<div class="card">
+<h3>Unified Balance</h3>
+<div class="big">$0.00</div>
+<p>Available Across Chains</p>
+</div>
+
+<div class="card">
+<h3>Current Network</h3>
+
+<select>
+<option>Arc Testnet</option>
+<option>Sepolia Testnet</option>
+<option>Arbitrum Sepolia</option>
+<option>Base Sepolia</option>
+</select>
+
+<p>Chain ID: 5042002</p>
+
+</div>
+
+<div class="card">
+<h3>Wallet</h3>
+<button class="green">
+Connect Wallet
+</button>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Token Balances</h3>
+
+<div class="token">
+<span>USDC</span>
+<span>0.00</span>
+</div>
+
+<div class="token">
+<span>EURC</span>
+<span>0.00</span>
+</div>
+
+<div class="token">
+<span>cirBTC</span>
+<span>0.00</span>
+</div>
+
+<button>
+Refresh Balances
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Send Tokens</h3>
+
+<select>
+<option>USDC</option>
+<option>EURC</option>
+<option>cirBTC</option>
+</select>
+
+<input placeholder="Recipient Address">
+
+<input placeholder="Amount">
+
+<button class="green">
+Send
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Unified Balance</h3>
+
+<input placeholder="Amount">
+
+<button class="green">
+Deposit
+</button>
+
+<button class="purple">
+Spend
+</button>
+
+<button>
+Check Balance
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Bridge</h3>
+
+<select>
+<option>Arc Testnet</option>
+<option>Sepolia</option>
+<option>Arbitrum Sepolia</option>
+<option>Base Sepolia</option>
+</select>
+
+<select>
+<option>Arc Testnet</option>
+<option>Sepolia</option>
+<option>Arbitrum Sepolia</option>
+<option>Base Sepolia</option>
+</select>
+
+<input placeholder="Amount">
+
+<button>
+Bridge Assets
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Fee Estimator</h3>
+
+<select>
+<option>Arc Testnet</option>
+<option>Sepolia</option>
+<option>Arbitrum Sepolia</option>
+</select>
+
+<button class="yellow">
+Estimate Fee
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Analytics</h3>
+
+<p>Total Transfers: 0</p>
+<br>
+<p>Total Bridges: 0</p>
+<br>
+<p>Total Deposits: 0</p>
+<br>
+<p>Total Volume: $0</p>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card transactions">
+
+<h3>Recent Transactions</h3>
+
+<table>
+
+<tr>
+<th>Hash</th>
+<th>Type</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td colspan="4">
+No transactions yet
+</td>
+</tr>
+
+</table>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h3>Social Connect</h3>
+
+<div class="social">
+
+<button>Google</button>
+<button>GitHub</button>
+<button>Discord</button>
+<button>X</button>
+<button>Telegram</button>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+ArcOne Finance Dashboard
+
+<br><br>
+
+Powered by Arc Testnet
+
+<br>
+
+Chain ID: 5042002
+
+<br><br>
+
+USDC • EURC • cirBTC
+
+</div>
+
+</body>
+</html>
