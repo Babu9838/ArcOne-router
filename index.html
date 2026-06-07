@@ -1,323 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ArcOne Wallet Connect</title>
+<!-- Token Transfer Card -->
 
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.1/dist/ethers.umd.min.js"></script>
+<div class="card">
+
+  <h2>💸 Token Transfer</h2>
+
+  <label>Select Token</label>
+
+  <select id="tokenSelect">
+      <option value="USDC">USDC</option>
+      <option value="EURC">EURC</option>
+      <option value="cirBTC">cirBTC</option>
+  </select>
+
+  <label>Recipient Address</label>
+
+  <input
+      type="text"
+      id="recipientAddress"
+      placeholder="0x..."
+  >
+
+  <label>Amount</label>
+
+  <input
+      type="number"
+      id="transferAmount"
+      placeholder="0.00"
+  >
+
+  <button
+      id="sendBtn"
+      onclick="sendToken()"
+  >
+      Send Token
+  </button>
+
+  <div id="transferStatus"></div>
+
+</div>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter,sans-serif;
-}
-
-body{
-background:#020617;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
 
 .card{
-width:420px;
 background:#0f172a;
 border:1px solid #1e293b;
-padding:30px;
-border-radius:20px;
-text-align:center;
+padding:20px;
+border-radius:16px;
+margin-top:20px;
 }
 
-.logo{
-font-size:40px;
-margin-bottom:10px;
-}
-
-h1{
-margin-bottom:10px;
-}
-
-p{
-color:#94a3b8;
-margin-bottom:20px;
-word-break:break-all;
-}
-
-select{
-width:100%;
-padding:12px;
-background:#111827;
-border:1px solid #374151;
-color:white;
-border-radius:10px;
+.card h2{
 margin-bottom:15px;
 }
 
-button{
+input,
+select{
 width:100%;
 padding:12px;
+margin-top:8px;
+margin-bottom:15px;
+border-radius:10px;
+border:1px solid #334155;
+background:#111827;
+color:white;
+}
+
+#sendBtn{
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
 border:none;
 border-radius:10px;
 cursor:pointer;
-font-weight:600;
-margin-top:10px;
+font-weight:bold;
 }
 
-.connect{
-background:#2563eb;
-color:white;
-}
-
-.switch{
-background:#16a34a;
-color:white;
-}
-
-.status{
+#transferStatus{
 margin-top:15px;
 padding:10px;
 background:#111827;
 border-radius:10px;
-font-size:14px;
+color:#22c55e;
 }
+
 </style>
-</head>
-<body>
-
-<div class="card">
-
-<div class="logo">⚡</div>
-
-<h1>ArcOne</h1>
-
-<p id="walletAddress">
-Wallet Not Connected
-</p>
-
-<button
-class="connect"
-id="connectBtn">
-Connect Wallet
-</button>
-
-<br><br>
-
-<select id="networkSelect">
-<option value="ARC">Arc Testnet</option>
-<option value="SEPOLIA">Sepolia Testnet</option>
-<option value="ARBITRUM">Arbitrum Sepolia</option>
-</select>
-
-<button
-class="switch"
-onclick="changeNetwork()">
-Switch Network
-</button>
-
-<div class="status" id="networkStatus">
-No Network Detected
-</div>
-
-</div>
 
 <script>
 
-let provider;
-let signer;
+const TOKENS = {
 
-const NETWORKS = {
-
-ARC:{
-chainId:"0x4ceaf2",
-chainName:"Arc Testnet",
-nativeCurrency:{
-name:"USDC",
-symbol:"USDC",
+USDC:{
+address:"0x3600000000000000000000000000000000000000",
 decimals:6
 },
-rpcUrls:[
-"https://rpc.testnet.arc.network"
-],
-blockExplorerUrls:[
-"https://testnet.arcscan.app"
-]
+
+EURC:{
+address:"0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
+decimals:6
 },
 
-SEPOLIA:{
-chainId:"0xaa36a7",
-chainName:"Sepolia",
-nativeCurrency:{
-name:"ETH",
-symbol:"ETH",
-decimals:18
-},
-rpcUrls:[
-"https://rpc.sepolia.org"
-],
-blockExplorerUrls:[
-"https://sepolia.etherscan.io"
-]
-},
-
-ARBITRUM:{
-chainId:"0x66eee",
-chainName:"Arbitrum Sepolia",
-nativeCurrency:{
-name:"ETH",
-symbol:"ETH",
-decimals:18
-},
-rpcUrls:[
-"https://sepolia-rollup.arbitrum.io/rpc"
-],
-blockExplorerUrls:[
-"https://sepolia.arbiscan.io"
-]
+cirBTC:{
+address:"",
+decimals:8
 }
 
 };
 
-async function connectWallet(){
+async function sendToken(){
 
-try{
-
-if(!window.ethereum){
-alert("Please install MetaMask");
-return;
-}
-
-provider =
-new ethers.BrowserProvider(
-window.ethereum
-);
-
-await provider.send(
-"eth_requestAccounts",
-[]
-);
-
-signer =
-await provider.getSigner();
-
-const address =
-await signer.getAddress();
-
+const token =
 document.getElementById(
-"walletAddress"
-).innerHTML =
-address;
-
-document.getElementById(
-"connectBtn"
-).innerHTML =
-"Connected ✅";
-
-getCurrentNetwork();
-
-}catch(error){
-console.error(error);
-}
-
-}
-
-async function changeNetwork(){
-
-const selected =
-document.getElementById(
-"networkSelect"
+"tokenSelect"
 ).value;
 
-const network =
-NETWORKS[selected];
+const recipient =
+document.getElementById(
+"recipientAddress"
+).value;
 
-try{
+const amount =
+document.getElementById(
+"transferAmount"
+).value;
 
-await window.ethereum.request({
-method:"wallet_switchEthereumChain",
-params:[
-{
-chainId:network.chainId
-}
-]
-});
+if(!recipient){
 
-}catch(error){
-
-if(error.code===4902){
-
-await window.ethereum.request({
-method:"wallet_addEthereumChain",
-params:[network]
-});
-
-}
-
-}
-
-getCurrentNetwork();
-
-}
-
-async function getCurrentNetwork(){
-
-if(!window.ethereum) return;
-
-const provider =
-new ethers.BrowserProvider(
-window.ethereum
+alert(
+"Enter recipient address"
 );
 
-const network =
-await provider.getNetwork();
+return;
+
+}
+
+if(!amount){
+
+alert(
+"Enter amount"
+);
+
+return;
+
+}
 
 document.getElementById(
-"networkStatus"
+"transferStatus"
 ).innerHTML =
-"Chain ID: " +
-network.chainId;
+`Preparing ${amount} ${token} transfer...`;
 
-}
+console.log({
+token,
+recipient,
+amount
+});
 
-document
-.getElementById("connectBtn")
-.addEventListener(
-"click",
-connectWallet
-);
+/*
+Real ERC20 Transfer
+requires:
 
-if(window.ethereum){
+ethers.js
+wallet connect
+signer
+contract.transfer()
 
-window.ethereum.on(
-"accountsChanged",
-(accounts)=>{
-
-if(accounts.length){
-
-document.getElementById(
-"walletAddress"
-).innerHTML =
-accounts[0];
-
-}
-
-}
-);
-
-window.ethereum.on(
-"chainChanged",
-()=>{
-location.reload();
-}
-);
+*/
 
 }
 
 </script>
 
-</body>
-</html>
+.
